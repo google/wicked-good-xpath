@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Huge DOM Performance Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script>
+    goog.require('goog.testing.PerformanceTable');
+    goog.require('goog.testing.PerformanceTimer');
+    goog.require('goog.testing.jsunit');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+  <iframe id="testFrame" src="perf_test_page.html"></iframe>
+  <div id="perfTable"></div>
+  <script>
+    var table, body;
+    var NUM_SAMPLES = 10;
+    var TIMEOUT_INTERVAL = 9000;
+    var DOES_DISCARD_OUTLIERS = true;
+    var NUM_CHILD_DIVS = 1000;
+
+    function setUpPage() {
+      var timer = new goog.testing.PerformanceTimer();
+      timer.setNumSamples(NUM_SAMPLES);
+      timer.setTimeoutInterval(TIMEOUT_INTERVAL);
+      timer.setDiscardOutliers(DOES_DISCARD_OUTLIERS);
+      table = new goog.testing.PerformanceTable(
+          document.getElementById('perfTable'), timer);
+      var testFrame = document.getElementById('testFrame');
+      var doc = testFrame.contentWindow.document;
+      body = doc.body;
+      var div = doc.getElementById('dummy');
+      for (var i = 0; i < NUM_CHILD_DIVS; i++) {
+        body.appendChild(div.cloneNode(true));
+      }
+      wgxpath.test.setContext(body);
+    }
+
+    function tearDownPage() {
+      for (var i = 0; i < NUM_CHILD_DIVS; i++) {
+        body.removeChild(body.lastChild);
+      }
+    }
+
+    function testArithmeticWithParentheses() {
+      table.run(function() {
+          wgxpath.test.assertEvaluatesToNodeSet(['div#with'],
+          '//*[@price * (@count + @count) = 12]');
+      }, 'Testing arithmetic with parentheses');
+    }
+
+    function testArithmeticdummyParentheses() {
+      table.run(function() {
+          wgxpath.test.assertEvaluatesToNodeSet(['div#without'],
+          '//*[@price * @count + @count = 15]');
+      }, 'Testing arithmetic without parentheses');
+    }
+  </script>
+</body>
+</html>

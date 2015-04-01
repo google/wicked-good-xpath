@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>IE id problem</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="ie_id_problem_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'div#tags',
+        'div#getElementsByTagName', 'div#getElementById',
+        'div#children', 'div#nodeType', 'div#length'], '/html/body/div');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'div#aaa', 'div#tags',
+        'div#getElementsByTagName', 'div#getElementById', 'div#children',
+        'div#nodeType', 'div#length'], '//body//div');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#aaa'], '//div[@id="aaa"]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#aaa'], 'id("aaa")');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span#1'], '//span[@name="foo"]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span#2'], '//span[@id="2"]');
+  }
+</script>
+</html>

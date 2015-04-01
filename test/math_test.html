@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>math_test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+  <div id="with" price="2" count="3"></div>
+  <div id="without" price="2" count="4"></div>
+  <script>
+    function setUpPage() {
+      wgxpath.test.setContext(document);
+    }
+
+    function testArithmeticWithParentheses() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#with'],
+          '//*[@price * (@count + @count) = 12]');
+    }
+
+    function testArithmeticWithoutParentheses() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#without'],
+          '//*[@price * @count + @count = 12]');
+    }
+  </script>
+</body>
+</html>

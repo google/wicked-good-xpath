@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Simple Value Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="simple_value_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.userAgent');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  var DOCUMENT_TO_STRING = (wgxpath.test.IE_DOC_PRE_9) ?
+      'Titlehoge 3 1 2 3 4 5' : 'Title hoge 3 1 2 3 4 5';
+
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToValue('html', 'local-name(/html)');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToValue(1, 'count(/)');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToValue(5, 'count(//li)');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToValue(true, 'boolean(id("b"))');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToValue(false, 'boolean(/..)');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToValue(false, 'boolean(0)');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToValue(false, 'boolean(NaN)');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToValue(true, 'boolean(1)');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToValue(true, 'boolean(-1)');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToValue(false, 'boolean("")');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToValue(true, 'boolean("Nice boat.")');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToValue(false, 'not(true())');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToValue(true, 'true() and true()');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToValue(true, 'true() or  false()');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToValue(3, 'number(id("b"))');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToValue(1, 'number("1")');
+  }
+
+  function test16() {
+    wgxpath.test.assertEvaluatesToValue(-1, 'number("-1")');
+  }
+
+  function test17() {
+    wgxpath.test.assertEvaluatesToValue(1, 'number(" 1")');
+  }
+
+  function test18() {
+    wgxpath.test.assertEvaluatesToValue(-1, 'number(" -1")');
+  }
+
+  function test19() {
+    wgxpath.test.assertEvaluatesToValue(1, 'number(true())');
+  }
+
+  function test20() {
+    wgxpath.test.assertEvaluatesToValue(0, 'number(false())');
+  }
+
+  function test21() {
+    wgxpath.test.assertEvaluatesToValue(15, 'sum(id("numbers")/li)');
+  }
+
+  function test22() {
+    wgxpath.test.assertEvaluatesToValue(2, '1 + 1');
+  }
+
+  function test23() {
+    wgxpath.test.assertEvaluatesToValue(2, '1+1');
+  }
+
+  function test24() {
+    wgxpath.test.assertEvaluatesToValue(0, '1 - 1');
+  }
+
+  function test25() {
+    wgxpath.test.assertEvaluatesToValue(0, '1-1');
+  }
+
+  function test26() {
+    wgxpath.test.assertEvaluatesToValue('NaN', 'string(html - html)');
+  }
+
+  function test27() {
+    wgxpath.test.assertEvaluatesToValue(DOCUMENT_TO_STRING,
+        'normalize-space(string())');
+  }
+
+  function test28() {
+    wgxpath.test.assertEvaluatesToValue(DOCUMENT_TO_STRING,
+        'normalize-space(string(.))');
+  }
+
+  function test29() {
+    wgxpath.test.assertEvaluatesToValue(DOCUMENT_TO_STRING,
+        'normalize-space(string(/))');
+  }
+
+  function test30() {
+    wgxpath.test.assertEvaluatesToValue(DOCUMENT_TO_STRING,
+        'normalize-space(string(/html))');
+  }
+
+  function test31() {
+    wgxpath.test.assertEvaluatesToValue('hoge 3',
+        'normalize-space(string(//div))');
+  }
+
+  function test32() {
+    wgxpath.test.assertEvaluatesToValue('Title', 'string(//*//*//*)');
+  }
+
+  function test33() {
+    wgxpath.test.assertEvaluatesToValue('', 'string(/..)');
+  }
+
+  function test34() {
+    wgxpath.test.assertEvaluatesToValue('NaN', 'string(number("Nice boat."))');
+  }
+
+  function test35() {
+    wgxpath.test.assertEvaluatesToValue('Infinity', 'string(1 div 0)');
+  }
+
+  function test36() {
+    wgxpath.test.assertEvaluatesToValue('-Infinity', 'string(1 div -0)');
+  }
+
+  function test37() {
+    wgxpath.test.assertEvaluatesToValue('0', 'string(0)');
+  }
+
+  function test38() {
+    wgxpath.test.assertEvaluatesToValue('0', 'string(-0)');
+  }
+
+  function test39() {
+    wgxpath.test.assertEvaluatesToValue('1', 'string(1)');
+  }
+
+  function test40() {
+    wgxpath.test.assertEvaluatesToValue('-1', 'string(-1)');
+  }
+
+  function test41() {
+    wgxpath.test.assertEvaluatesToValue('true', 'string(true())');
+  }
+
+  function test42() {
+    wgxpath.test.assertEvaluatesToValue('false', 'string(false())');
+  }
+
+  function test43() {
+    wgxpath.test.assertEvaluatesToValue(0, 'string-length("")');
+  }
+
+  function test44() {
+    wgxpath.test.assertEvaluatesToValue(1, 'string-length("a")');
+  }
+
+  function test45() {
+    wgxpath.test.assertEvaluatesToValue(true, 'contains("abcdefg", "def")');
+  }
+
+  function test46() {
+    wgxpath.test.assertEvaluatesToValue(false, 'contains("abcdefg", "zzz")');
+  }
+
+  function test47() {
+    wgxpath.test.assertEvaluatesToValue(true, 'starts-with("abcdefg", "abc")');
+  }
+
+  function test48() {
+    wgxpath.test.assertEvaluatesToValue(false, 'starts-with("abcdefg", "def")');
+  }
+
+  function test49() {
+    wgxpath.test.assertEvaluatesToValue('abcdef', 'concat("abc", "def")');
+  }
+
+  function test50() {
+    wgxpath.test.assertEvaluatesToValue('abcdefghi',
+        'concat("abc", "def", "ghi")');
+  }
+
+  function test51() {
+    wgxpath.test.assertEvaluatesToValue('abcdefghijkl',
+        'concat("abc", "def", "ghi", "jkl")');
+  }
+
+  function test52() {
+    wgxpath.test.assertEvaluatesToValue('BAr', 'translate("bar","abc","ABC")');
+  }
+
+  function test53() {
+    wgxpath.test.assertEvaluatesToValue('AAA',
+        'translate("--aaa--","abc-","ABC")');
+  }
+
+  function test54() {
+    wgxpath.test.assertEvaluatesToValue('234', 'substring("12345", 2, 3)');
+  }
+
+  function test55() {
+    wgxpath.test.assertEvaluatesToValue('2345', 'substring("12345", 2)');
+  }
+
+  function test56() {
+    wgxpath.test.assertEvaluatesToValue('234', 'substring("12345", 1.5, 2.6)');
+  }
+
+  function test57() {
+    wgxpath.test.assertEvaluatesToValue('12', 'substring("12345", 0, 3)');
+  }
+
+  function test58() {
+    wgxpath.test.assertEvaluatesToValue('', 'substring("12345", 0 div 0, 3)');
+  }
+
+  function test59() {
+    wgxpath.test.assertEvaluatesToValue('', 'substring("12345", 1, 0 div 0)');
+  }
+
+  function test60() {
+    wgxpath.test.assertEvaluatesToValue('12345',
+        'substring("12345", -42, 1 div 0)');
+  }
+
+  function test61() {
+    wgxpath.test.assertEvaluatesToValue('',
+        'substring("12345", -1 div 0, 1 div 0)');
+  }
+
+  function test62() {
+    wgxpath.test.assertEvaluatesToValue('04/01',
+        'substring-after("1999/04/01","/")');
+  }
+
+  function test63() {
+    wgxpath.test.assertEvaluatesToValue('99/04/01',
+        'substring-after("1999/04/01","19")');
+  }
+
+  function test64() {
+    wgxpath.test.assertEvaluatesToValue('1999',
+        'substring-before("1999/04/01","/")');
+  }
+
+  function test65() {
+    wgxpath.test.assertEvaluatesToValue(true,
+        'normalize-space(id("numbers")/li) = "1"');
+  }
+
+  function test66() {
+    wgxpath.test.assertEvaluatesToValue(true,
+        'id("numbers")/li = id("numbers")/li');
+  }
+
+  function test67() {
+    wgxpath.test.assertEvaluatesToValue(true, '"" = false()');
+  }
+
+  function test68() {
+    wgxpath.test.assertEvaluatesToValue(true, 'false() = ""');
+  }
+
+  function test69() {
+    wgxpath.test.assertEvaluatesToValue(true, '"1" = 1');
+  }
+
+  function test70() {
+    wgxpath.test.assertEvaluatesToValue(true, '1 = "1"');
+  }
+
+  function test71() {
+    wgxpath.test.assertEvaluatesToValue(true, '"1" = "1"');
+  }
+
+  function test72() {
+    wgxpath.test.assertEvaluatesToNodeSet([], 'html-html');
+  }
+</script>
+</html>

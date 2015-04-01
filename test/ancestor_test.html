@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Ancestor Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="ancestor_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body'],
+        'id("t")/ancestor::*');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body'],
+        'id("t")/ancestor::node()');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::*');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::node()');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body'],
+        'id("t")/ancestor-or-self::node()/ancestor::*');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body'],
+        'id("t")/ancestor-or-self::node()/ancestor::node()');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::node()/ancestor-or-self::*');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::node()/ancestor-or-self::node()');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['body'], 'id("t")/ancestor::*[1]');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['body'],
+        'id("t")/ancestor::node()[1]');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h1'],
+        'id("t")/ancestor-or-self::*[1]');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h1'],
+        'id("t")/ancestor-or-self::node()[1]');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body'],
+        'id("t")/ancestor-or-self::node()/ancestor::*[1]');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body'],
+        'id("t")/ancestor-or-self::node()/ancestor::node()[1]');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::node()/ancestor-or-self::*[1]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()', 'html', 'body', 'h1'],
+        'id("t")/ancestor-or-self::node()/ancestor-or-self::node()[1]');
+  }
+</script>
+</html>

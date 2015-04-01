@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Attribute Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="attribute_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        '//blockquote["http://coderepos.org/"=@cite]');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'a'],
+        '/descendant::*["CodeRepos"=@title]');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input', 'input', 'img', 'img',
+        'cite'], '//*[@class]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'p', 'a'],
+        '/descendant::node()[@title]');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'], '//body/*[@title]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], '//blockquote/node()[@title]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet([], '//cite[@class="cite"]');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet([], '//cite[@class="site"]');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['cite'],
+        '//cite[@class="cite site"]');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], '//*[@id="paragraph"]');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], '//body//*[@id="paragraph"]');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'], '//*[@id="bar"]');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//*[@name="foo"]');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'], '//*[@id="foo"]');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+                                          '//*[@name="bar"]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//p/node()[@id="bar"]');
+  }
+
+  function test16() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//p/node()[@name="foo"]');
+  }
+
+  function test17() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//p/node()[@id="foo"]');
+  }
+
+  function test18() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//p/node()[@name="bar"]');
+  }
+
+  function test19() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        'id("pSib")/following-sibling::*[@id][1]');
+  }
+
+  function test20() {
+    wgxpath.test.assertEvaluatesToNodeSet(['img.img-2'],
+        'id("nSib")/preceding-sibling::*[@id][1]');
+  }
+
+  function test21() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("pSib")/following-sibling::*[@id="foo"]');
+  }
+
+  function test22() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("nSib")/preceding-sibling::*[@id="foo"]');
+  }
+
+  function test23() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("pSib")/following::*[@id="foo"]');
+  }
+
+  function test24() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("nSib")/preceding::*[@id="foo"]');
+  }
+
+  function test25() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '/descendant::*[@id="foo"]');
+  }
+
+  function test26() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '/descendant-or-self::*[@id="foo"]');
+  }
+
+  function test27() {
+    wgxpath.test.assertEvaluatesToNodeSet(['img.img-2'],
+        'id("hoge")/self::*[@id="hoge"]');
+  }
+
+  function test28() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("foo")/self::*[@id="foo"]');
+  }
+
+  function test29() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/parent::*[@id="paragraph"]');
+  }
+
+  function test30() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/ancestor::*[@id="paragraph"]');
+  }
+
+  function test31() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/ancestor-or-self::*[@id="paragraph"]');
+  }
+
+  function test32() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'a'],
+        '//*[./@title="CodeRepos"]');
+  }
+
+  function test33() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input', 'input', 'img', 'img',
+        'cite'], '//node()[./@class]');
+  }
+
+  function test34() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'p', 'a'],
+        '/descendant::node()[./@title]');
+  }
+
+  function test35() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        '/descendant::blockquote/*[./@title]');
+  }
+
+  function test36() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        '//blockquote[@*="http://coderepos.org/"]');
+  }
+
+  function test37() {
+    wgxpath.test.assertEvaluatesToNodeSet(['link', 'blockquote', 'a'],
+        '//node()[@*="http://coderepos.org/"]');
+  }
+
+  function test38() {
+    wgxpath.test.assertEvaluatesToNodeSet(['link', 'blockquote', 'a'],
+        '//*[./@*="http://coderepos.org/"]');
+  }
+
+  function test39() {
+    wgxpath.test.assertEvaluatesToNodeSet(['link', 'blockquote', 'a'],
+        '//*[(@href|@cite)="http://coderepos.org/"]');
+  }
+
+  function test40() {
+    wgxpath.test.assertEvaluatesToValue(true,
+        'count(//blockquote/@*) = count(//blockquote/@* | //blockquote/@*)');
+  }
+
+  function test41() {
+    wgxpath.test.assertEvaluatesToNodeSet([], '//cite[./@class="cite"]');
+  }
+
+  function test42() {
+    wgxpath.test.assertEvaluatesToNodeSet([], '//cite[./@class="site"]');
+  }
+
+  function test43() {
+    wgxpath.test.assertEvaluatesToNodeSet(['cite'],
+        '//cite[./@class="cite site"]');
+  }
+
+  function test44() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], '//*[./@id="paragraph"]');
+  }
+
+  function test45() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        '//blockquote//*[./@id="paragraph"]');
+  }
+
+  function test46() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//*[./@id="bar"]');
+  }
+
+  function test47() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//*[./@name="foo"]');
+  }
+
+  function test48() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//*[./@id="foo"]');
+  }
+
+  function test49() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//*[./@name="bar"]');
+  }
+
+  function test50() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//p/node()[./@id="bar"]');
+  }
+
+  function test51() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//p/node()[./@name="foo"]');
+  }
+
+  function test52() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//p/node()[./@id="foo"]');
+  }
+
+  function test53() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//p/node()[./@name="bar"]');
+  }
+
+  function test54() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//node()[./@id="bar"]');
+  }
+
+  function test55() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        '//node()[./@name="foo"]');
+  }
+
+  function test56() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//node()[./@id="foo"]');
+  }
+
+  function test57() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '//node()[./@name="bar"]');
+  }
+
+  function test58() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-1'],
+        'id("pSib")/following-sibling::*[./@id][1]');
+  }
+
+  function test59() {
+    wgxpath.test.assertEvaluatesToNodeSet(['img.img-2'],
+        'id("nSib")/preceding-sibling::*[./@id][1]');
+  }
+
+  function test60() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("pSib")/following-sibling::*[./@id="foo"]');
+  }
+
+  function test61() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("nSib")/preceding-sibling::*[./@id="foo"]');
+  }
+
+  function test62() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("pSib")/following::*[./@id="foo"]');
+  }
+
+  function test63() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("nSib")/preceding::*[./@id="foo"]');
+  }
+
+  function test64() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '/descendant::*[./@id="foo"]');
+  }
+
+  function test65() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        '/descendant-or-self::*[./@id="foo"]');
+  }
+
+  function test66() {
+    wgxpath.test.assertEvaluatesToNodeSet(['input.input-2'],
+        'id("foo")/self::*[./@id="foo"]');
+  }
+
+  function test67() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/parent::*[./@id="paragraph"]');
+  }
+
+  function test68() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/ancestor::*[./@id="paragraph"]');
+  }
+
+  function test69() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'],
+        'id("foo")/ancestor-or-self::*[./@id="paragraph"]');
+  }
+</script>
+</html>

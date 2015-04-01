@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('goog.userAgent');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+<svg id="svg" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 50">
+  <rect id="rect" fill="red" stroke="none" height="12" width="12" y="20" x="100"></rect>
+  <text id="text" fill="black" font-size="12" font-family="Arial" y="30" x="115">Apple</text>
+  <path id="path" d="M 200 26 L 600 26" stroke="red" stroke-width="1em"/>
+</svg>
+  <script>
+    var SVG_NS_RESOLVER = function(prefix) {
+      return prefix == 'svg' ? 'http://www.w3.org/2000/svg' : null;
+    };
+
+    function setUpPage() {
+      wgxpath.test.setContext(document);
+    }
+
+    function assertEvaluatesToSvgNodeSet(expected, expr) {
+      wgxpath.test.assertEvaluatesToNodeSet(expected, expr, SVG_NS_RESOLVER);
+    }
+
+    function testSvgElement() {
+      assertEvaluatesToSvgNodeSet(['svg#svg'], '//svg:svg');
+    }
+
+    function testSvgRectElement() {
+      assertEvaluatesToSvgNodeSet(['rect#rect'], '//svg:rect');
+    }
+
+    function testSvgTextElement() {
+      assertEvaluatesToSvgNodeSet(['text#text'], '//svg:text');
+    }
+
+    function testSvgPathElement() {
+      assertEvaluatesToSvgNodeSet(['path#path'], '//svg:path');
+    }
+  </script>
+</body>
+</html>

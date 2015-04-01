@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Descendant Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="descendant_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.userAgent');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function conditionTitleText(expected) {
+    if (!wgxpath.test.IE_DOC_PRE_9) {
+      return expected;
+    }
+    for (var i = 0; i < expected.length; i++) {
+      if (expected[i] == 'text(title)') {
+        expected.splice(i, 1);
+        break;
+      }
+    }
+    return expected;
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'body',
+        'h1'], '//*');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['html', 'head',
+        'title', 'text(title)', 'body', 'h1', 'text(foo)']), '//node()');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'body',
+        'h1'], '/descendant::*');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['html', 'head',
+        'title', 'text(title)', 'body', 'h1', 'text(foo)']),
+        '/descendant::node()');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'body',
+        'h1'], '/descendant-or-self::*');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['document()',
+        'html', 'head', 'title', 'text(title)', 'body', 'h1', 'text(foo)']),
+        '/descendant-or-self::node()');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'body', 'h1'],
+        '//*//*');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['head', 'title',
+        'text(title)', 'body', 'h1', 'text(foo)']), '//node()//node()');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'body', 'h1'],
+        '//*/descendant::*');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['head', 'title',
+        'text(title)', 'body', 'h1', 'text(foo)']),
+        '//node()/descendant::node()');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'body',
+        'h1'], '//*/descendant-or-self::*');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['html', 'head',
+        'title', 'text(title)', 'body', 'h1', 'text(foo)']),
+        '//node()/descendant-or-self::node()');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'h1'],
+        '//*[1]');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['html', 'head',
+        'title', 'text(title)', 'h1', 'text(foo)']), '//node()[1]');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html'], '/descendant::*[1]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html'], '/descendant::node()[1]');
+  }
+
+  function test16() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html'],
+                                          '/descendant-or-self::*[1]');
+  }
+
+  function test17() {
+    wgxpath.test.assertEvaluatesToNodeSet(['document()'],
+        '/descendant-or-self::node()[1]');
+  }
+
+  function test18() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'h1'], '//*//*[1]');
+  }
+
+  function test19() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['head', 'title',
+        'text(title)', 'h1', 'text(foo)']), '//node()//node()[1]');
+  }
+
+  function test20() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'h1'],
+        '//*/descendant::*[1]');
+  }
+
+  function test21() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['head', 'title',
+        'text(title)', 'h1', 'text(foo)']), '//node()/descendant::node()[1]');
+  }
+
+  function test22() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'head', 'title', 'body',
+        'h1'], '//*/descendant-or-self::*[1]');
+  }
+
+  function test23() {
+    wgxpath.test.assertEvaluatesToNodeSet(conditionTitleText(['html', 'head',
+        'title', 'text(title)', 'body', 'h1', 'text(foo)']),
+        '//node()/descendant-or-self::node()[1]');
+  }
+</script>
+</html>

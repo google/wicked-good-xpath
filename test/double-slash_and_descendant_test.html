@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Double-Slash and Descendant Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="double-slash_and_descendant_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent', 'div#child-1',
+        'div#grand-child-1-1', 'div#grand-child-1-2', 'div#grand-child-1-3',
+        'div#child-2', 'div#grand-child-2-1', 'div#grand-child-2-2',
+        'div#grand-child-2-3'], '/descendant::div');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent', 'div#child-1',
+        'div#grand-child-1-1', 'p', 'div#grand-child-1-2', 'p',
+        'div#grand-child-1-3', 'p', 'div#child-2', 'div#grand-child-2-1',
+        'p', 'div#grand-child-2-2', 'p', 'div#grand-child-2-3'],
+        '//body/descendant::*');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent'],
+                                          '/descendant::div[1]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent', 'div#child-1',
+        'div#grand-child-1-1', 'div#grand-child-1-2',
+        'div#grand-child-1-3', 'div#child-2', 'div#grand-child-2-1',
+        'div#grand-child-2-2', 'div#grand-child-2-3'], '//div');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent', 'div#child-1',
+        'div#grand-child-1-1', 'p', 'div#grand-child-1-2', 'p',
+        'div#grand-child-1-3', 'p', 'div#child-2', 'div#grand-child-2-1',
+        'p', 'div#grand-child-2-2', 'p', 'div#grand-child-2-3'], '//body//*');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#parent', 'div#child-1',
+        'div#grand-child-1-1', 'div#grand-child-2-1'], '//div[1]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#grand-child-1-1',
+        'div#grand-child-1-2', 'div#grand-child-1-3', 'div#grand-child-2-1',
+        'div#grand-child-2-2', 'div#grand-child-2-3'],
+        '//div[contains(@id, "grand-child")]');
+  }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!-- A DOCTYPE is intentionally missing so that the test can test quirks
+mode -->
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Quirks Mode Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="quirks_mode_test_page.html"></iframe>
+  <script src="./test_js_deps.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('wgxpath.test');
+  </script>
+  <script>
+    function setUpPage() {
+      var testFrame = document.getElementById('testFrame');
+      wgxpath.test.setContext(testFrame.contentWindow.document);
+    }
+
+    function testClassAttributeMatch() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div.f std uc'],
+          'id("cnt")//*[@class="f std uc"]');
+    }
+
+    function testStyleAttributeMatch() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#style'],
+        '//div[contains(@style, "auto")]');
+    }
+  </script>
+</body>
+</html>

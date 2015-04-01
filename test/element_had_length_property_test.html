@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Element had length property Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="element_had_length_property_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'], 'id("target")');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//*[@id="target"]');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//select[@id="target"]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//node()[@id="target"]');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//body/*[@id="target"]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//body/select[@id="target"]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#target'],
+        '//body/node()[@id="target"]');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet([], 'id("target2")');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//*[@name="target2"]');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//select[@name="target2"]');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//node()[@name="target2"]');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//body/div/*[@name="target2"]');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//body/div/select[@name="target2"]');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['select#a', 'select#b'],
+        '//body/div/node()[@name="target2"]');
+  }
+</script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<head>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('goog.userAgent');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+  <script>
+  // IE versions <= 8 do not support XHTML. We cannot unconditionally include
+  // this iframe, because on browsers that do not support HTML, the iframe can
+  // cause a download and a dialog to appear, making the browser unresponsive.
+  var SUPPORTS_XHTML = !goog.userAgent.IE || goog.userAgent.isVersion(9);
+  if (SUPPORTS_XHTML) {
+    document.write('<iframe id="frame" src="xhtml_test_page.xhtml"></iframe>');
+  }
+  </script>
+</body>
+<script>
+  function shouldRunTests() {
+    return SUPPORTS_XHTML;
+  }
+
+  var WGX_NS_RESOLVER = function(pre) {
+    return pre == 'wgx' ? 'http://code.google.com/p/wicked-good-xpath/' : null;
+  };
+
+  function testNameFunctions() {
+    var frame = document.getElementById('frame');
+    var elem = frame.contentWindow.document.body.firstChild;
+    wgxpath.test.setContext(elem);
+    wgxpath.test.assertEvaluatesToValue(
+        'wgx:element', 'name(.)', WGX_NS_RESOLVER)
+    wgxpath.test.assertEvaluatesToValue(
+        'element', 'local-name(.)', WGX_NS_RESOLVER)
+  }
+</script>
+</html>

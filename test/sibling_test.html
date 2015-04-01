@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Sibling Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="sibling_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.2', 'span.3', 'span.4'],
+        'id("first")/following-sibling::*');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['text(foo)', 'span.2',
+        'text(bar)', 'span.3', 'text(baz)', 'span.4'],
+        'id("first")/following-sibling::node()');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.3', 'span.4'],
+        'id("first")/following-sibling::*/following-sibling::*');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.2', 'text(bar)', 'span.3',
+        'text(baz)', 'span.4'],
+        'id("first")/following-sibling::node()/following-sibling::node()');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.2'],
+        'id("first")/following-sibling::*[1]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['text(foo)'],
+        'id("first")/following-sibling::node()[1]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.3', 'span.4'],
+        'id("first")/following-sibling::*/following-sibling::*[1]');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.2', 'text(bar)', 'span.3',
+        'text(baz)', 'span.4'],
+        'id("first")/following-sibling::node()/following-sibling::node()[1]');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'span.2', 'span.3'],
+        'id("last")/preceding-sibling::*');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'text(foo)', 'span.2',
+        'text(bar)', 'span.3', 'text(baz)'],
+        'id("last")/preceding-sibling::node()');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'span.2'],
+        'id("last")/preceding-sibling::*/preceding-sibling::*');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'text(foo)', 'span.2',
+        'text(bar)', 'span.3'],
+        'id("last")/preceding-sibling::node()/preceding-sibling::node()');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.3'],
+        'id("last")/preceding-sibling::*[1]');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['text(baz)'],
+        'id("last")/preceding-sibling::node()[1]');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'span.2'],
+        'id("last")/preceding-sibling::*/preceding-sibling::*[1]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['span.1', 'text(foo)', 'span.2',
+        'text(bar)', 'span.3'],
+        'id("last")/preceding-sibling::node()/preceding-sibling::node()[1]');
+  }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: evanrthomas@google.com (Evan Thomas)
+-->
+<html>
+<head>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+  <div name="single" id="single">div element 1</div>
+  <div name="duplicate" id="duplicate_1">div element 2</div>
+  <div name="duplicate" id="duplicate_2">div element 3</div>
+  <div name="duplicate" id="duplicate_3">div element 4</div>
+  <script>
+    function setUpPage() {
+      wgxpath.test.setContext(document);
+    }
+
+    function testUniqueName() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#single'],
+          '//*[@name="single"]');
+    }
+
+    function testWithDuplicateName() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#duplicate_1',
+          'div#duplicate_2', 'div#duplicate_3'], '//*[@name="duplicate"]');
+    }
+  </script>
+</body>
+</html>

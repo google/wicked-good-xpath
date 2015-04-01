@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Misc</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="misc_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.userAgent');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#id2', 'div#id4-2'], '//div[2]');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#id2'], '/descendant::div[2]');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div#id2'], '(//div)[2]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['tr#id6', 'tr#id9'], '//tr[2]');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['tr#id6'], '/descendant::tr[2]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['tr#id6'], '(//tr)[2]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToValue(2, '(//p) + 1');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p#ppp'], 'id("ppp")[true()]');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToValue(1, 'number(id("ppp")[true()])');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToValue(2, 'id("ppp")[true()] + 1');
+  }
+</script>
+</html>

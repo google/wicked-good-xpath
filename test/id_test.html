@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>id_test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="./test_js_deps.js"></script>
+  <script src="../wgxpath.install.js"></script>
+  <script>
+    goog.require('goog.testing.jsunit');
+    goog.require('wgxpath.test');
+  </script>
+</head>
+<body>
+  <div id="dupeid">My id is dupeid</div>
+  <div id="dupeid">My id is also dupeid</div>
+  <div id="uniqueid">My id is uniqueid</div>
+  <script>
+    function setUpPage() {
+      wgxpath.test.setContext(document);
+    }
+
+    function testWithUniqueIdByIdFunction() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#uniqueid'], 'id("uniqueid")');
+    }
+
+    function testWithDupeIdByIdFunction() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#dupeid'], 'id("dupeid")');
+    }
+
+    function testUniqueIdByIdAttribute() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#uniqueid'],
+          '//*[@id="uniqueid"]');
+    }
+
+    function testDupeIdByIdAttribute() {
+      wgxpath.test.assertEvaluatesToNodeSet(['div#dupeid', 'div#dupeid'],
+          '//*[@id="dupeid"]');
+    }
+  </script>
+</body>
+</html>

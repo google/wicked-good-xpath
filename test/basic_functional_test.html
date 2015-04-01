@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Basic Functional Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="basic_functional_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.userAgent');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  var GECKO_PRE_2 = goog.userAgent.GECKO && !goog.userAgent.isVersionOrHigher(2);
+  var OPERA_PRE_12 = goog.userAgent.OPERA && !goog.userAgent.isVersionOrHigher(12);
+
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document.body);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'font'],
+        './/blockquote/*');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'font'],
+        './/blockquote/child::*');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['center'],
+                                          './/blockquote/parent::*');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'del', 'ins', 'font'],
+        './/blockquote/descendant::*');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'br', 'p', 'del',
+        'ins', 'font'], './/blockquote/descendant-or-self::*');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'div', 'center'],
+        './/blockquote/ancestor::*');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'div', 'center',
+        'blockquote'], './/blockquote/ancestor-or-self::*');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3', 'h4'],
+        './/blockquote/following-sibling::*');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h1', 'h2'],
+        './/blockquote/preceding-sibling::*');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3', 'dfn', 'a', 'h4', 'sub', 'sup',
+        'span', 'acronym', 'q'], './/blockquote/following::*');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'dl', 'dt', 'dd',
+        'h1', 'em', 'strong', 'h2', 'b', 's'], './/blockquote/preceding::*');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        './/blockquote/self::*');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        './/blockquote/attribute::id/parent::*');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        './/blockquote/@id/parent::*');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['center'], './/*[blockquote]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['center'],
+                                          './/*[child::blockquote]');
+  }
+
+  function test16() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'font'],
+        './/*[parent::blockquote]');
+  }
+
+  function test17() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'center'],
+        './/*[descendant::blockquote]');
+  }
+
+  function test18() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'center', 'blockquote'],
+        './/*[descendant-or-self::blockquote]');
+  }
+
+  function test19() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'del', 'ins', 'font'],
+        './/*[ancestor::blockquote]');
+  }
+
+  function test20() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote', 'br', 'p', 'del',
+        'ins', 'font'], './/*[ancestor-or-self::blockquote]');
+  }
+
+  function test21() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h1', 'h2'],
+        './/*[following-sibling::blockquote]');
+  }
+
+  function test22() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3', 'h4'],
+        './/*[preceding-sibling::blockquote]');
+  }
+
+  function test23() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dl', 'dt', 'dd', 'h1', 'em',
+        'strong', 'h2', 'b', 's'], './/*[following::blockquote]');
+  }
+
+  function test24() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3', 'dfn', 'a', 'h4', 'sub', 'sup',
+        'span', 'acronym', 'q'], './/*[preceding::blockquote]');
+  }
+
+  function test25() {
+    wgxpath.test.assertEvaluatesToNodeSet(['blockquote'],
+        './/*[self::blockquote]');
+  }
+
+  function test26() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'dt', 'dd', 'center',
+        'h1', 'em', 'strong', 'h2', 'b', 's', 'blockquote', 'br', 'p', 'del',
+        'ins', 'font', 'h3', 'dfn', 'a', 'h4', 'sub', 'sup', 'span', 'acronym',
+        'q'], './/*[@id]');
+  }
+
+  function test27() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'dt', 'dd', 'center',
+        'h1', 'em', 'strong', 'h2', 'b', 's', 'blockquote', 'br', 'p', 'del',
+        'ins', 'font', 'h3', 'dfn', 'a', 'h4', 'sub', 'sup', 'span', 'acronym',
+        'q'], './/*[attribute::id]');
+  }
+
+  function test28() {
+    var expected;
+    if (wgxpath.test.IE_DOC_PRE_9) {
+      expected =
+          ['text(blockquoteText1: )', 'text(blockquoteText2 )', 'text( )'];
+    } else if (GECKO_PRE_2) {
+      expected =
+          ['text(\n     )', 'text(\n     blockquoteText1:\n     )',
+           'text(\n     blockquoteText2\n     )',
+           'text(\n     \n     )', 'text(\n    )'];
+    } else if (wgxpath.test.ANDROID_FROYO) {
+      expected =
+          ['text(\n     )', 'text(\n     blockquoteText1:\n     )',
+           'text(\n     blockquoteText2\n     )',
+           'text(\n          )', 'text(\n    )'];
+    } else {
+      expected =
+          ['text(\n     )', 'text(\n     blockquoteText1:\n     )',
+           'text(\n     blockquoteText2\n     )', 'text(\n     )',
+           'text(\n     )', 'text(\n    )'];
+    }
+    wgxpath.test.assertEvaluatesToNodeSet(expected, './/blockquote/text()');
+  }
+
+  function test29() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], './/blockquote/p');
+  }
+
+  function test30() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'font'],
+        './/blockquote/*');
+  }
+
+  function test31() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3', 'h4', 'span'],
+        './/*[child::* and preceding::font]');
+  }
+
+  function test32() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dfn', 'a', 'sub', 'sup', 'acronym',
+        'q'], './/*[not(child::*) and preceding::font]');
+  }
+
+  function test33() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dl', 'dt', 'dd', 'h1', 'em',
+        'strong', 'h2', 'b', 's', 'h3', 'dfn', 'a', 'h4', 'sub', 'sup', 'span',
+        'acronym', 'q'],
+        './/*[preceding::blockquote or following::blockquote]');
+  }
+
+  function test34() {
+    wgxpath.test.assertEvaluatesToNodeSet(['html', 'body', 'div', 'center',
+        'br', 'p', 'del', 'ins', 'font'],
+        './/blockquote/ancestor::* | .//blockquote/descendant::*');
+  }
+
+  function test35() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[.="sub"]');
+  }
+
+  function test36() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'del', 'ins', 'font'],
+        './/*[@title > 12 and @class < 15]');
+  }
+
+  function test37() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'dt', 'dd', 'center',
+        'em', 'strong', 'b', 's', 'blockquote', 'br', 'p', 'del', 'ins', 'font',
+        'dfn', 'a', 'sub', 'sup', 'span', 'acronym', 'q'],
+        './/*[@title != @class]');
+  }
+
+  function test38() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dl', 'h1', 'h2', 's', 'blockquote',
+        'br', 'p', 'font', 'h3', 'dfn', 'a', 'h4', 'sub', 'sup', 'span',
+        'acronym', 'q'], './/*[((@class * @class + @title * @title) ' +
+        'div (@class + @title)) > ((@class - @title) * (@class - @title))]');
+  }
+
+  function test39() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dl', 'dd', 'h1', 'strong', 'b',
+        'blockquote', 'p', 'ins', 'h3', 'a', 'sub', 'span', 'q'],
+        './/*[@title mod 2 = 0]');
+  }
+
+  function test40() {
+    wgxpath.test.assertEvaluatesToNodeSet(['font'],
+        './/blockquote/child::*[last()]');
+  }
+
+  function test41() {
+    wgxpath.test.assertEvaluatesToNodeSet(['br', 'p', 'del'],
+        './/blockquote/descendant::*[position() < 4]');
+  }
+
+  function test42() {
+    wgxpath.test.assertEvaluatesToNodeSet(['strong', 'q'], 'id(.//font/@face)');
+  }
+
+  function testNameFunction() {
+    // In Gecko >= 1.9.3, the name() function returns uppercase characters.
+    // See comment here: https://bugzilla.mozilla.org/show_bug.cgi?id=566629#c13
+    // For XML docs, the spec requires lowercase, but it's ambiguous for HTML.
+    if (goog.userAgent.GECKO && goog.userAgent.isVersionOrHigher('1.9.3')) {
+      wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[name(.) = "SUB"]');
+      wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[name() = "SUB"]');
+    } else {
+      wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[name(.) = "sub"]');
+      wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[name() = "sub"]');
+    }
+  }
+
+  function testLocalNameFunction() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[local-name(.) = "sub"]');
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'], './/*[local-name() = "sub"]');
+  }
+
+  function test45() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p'], './/blockquote/child::*[2]');
+  }
+
+  function test46() {
+    wgxpath.test.assertEvaluatesToNodeSet(['ins'],
+        './/blockquote/descendant::*[4]');
+  }
+
+  function test47() {
+    wgxpath.test.assertEvaluatesToNodeSet(['del'],
+        './/blockquote/descendant-or-self::*[4]');
+  }
+
+  function test48() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div'],
+        './/blockquote/ancestor::*[2]');
+  }
+
+  function test49() {
+    wgxpath.test.assertEvaluatesToNodeSet(['center'],
+        './/blockquote/ancestor-or-self::*[2]');
+  }
+
+  function test50() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h3'],
+        './/blockquote/following-sibling::*[1]');
+  }
+
+  function test51() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h2'],
+        './/blockquote/preceding-sibling::*[1]');
+  }
+
+  function test52() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h4'],
+        './/blockquote/following::*[4]');
+  }
+
+  function test53() {
+    wgxpath.test.assertEvaluatesToNodeSet(['strong'],
+        './/blockquote/preceding::*[4]');
+  }
+
+  function test54() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ?
+        ['strong', 's', 'h4', 'sub', 'sup'] : ['strong', 's', 'sub', 'sup'];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/*[starts-with(.,"s")]');
+  }
+
+  function test55() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div'],
+        './/*[string(@title - 1) = "0"]');
+  }
+
+  function test56() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'],
+        './/*[string() = "sub"]');
+  }
+
+  function test57() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'],
+        './/*[string(.) = "sub"]');
+  }
+
+  function test58() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ? [] : ['sub'];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/*[normalize-space(concat(.,..)) = "sub sub sup"]');
+  }
+
+  function test59() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ? ['sub'] : [];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/sub[concat(.,..) = "subsub sup "]');
+  }
+
+  function test60() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ? [] : ['text(b)'];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/node()[normalize-space(concat(.,..,../..)) = "bb b s"]');
+  }
+
+  function test61() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ? ['text(b)'] : [];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/node()[concat(.,..,../..) = "bbb s "]');
+  }
+
+  function test62() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ?
+        ['h4', 'sub', 'sup'] : ['sub', 'sup'];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/*[substring-before(.,"u") = "s"]');
+  }
+
+  function test63() {
+    wgxpath.test.assertEvaluatesToNodeSet(['font'],
+        './/*[substring-after(.,"on") = "t"]');
+  }
+
+  function test64() {
+    var expected = wgxpath.test.IE_DOC_PRE_9 ?
+        ['h4', 'sub', 'sup'] : ['sub', 'sup'];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        './/*[substring(.,2,1) = "u"]');
+  }
+
+  function test65() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sup'],
+        './/*[substring(.,2) = "up"]');
+  }
+
+  function test66() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'center', 'h2', 'b',
+        'blockquote', 'h4', 'sub'], './/*[contains(.,"b")]');
+  }
+
+  function test67() {
+    wgxpath.test.assertEvaluatesToNodeSet(['del', 'ins', 'dfn', 'sub', 'sup'],
+        './/*[name() != "dt" and name() != "dd" and string-length() = 3]');
+  }
+
+  function test68() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h2', 'del', 'ins', 'dfn', 'sub',
+        'sup'], './/*[string-length(normalize-space(.)) = 3]');
+  }
+
+  function test69() {
+    wgxpath.test.assertEvaluatesToNodeSet(['sub'],
+        './/*[.=translate(normalize-space("  s  u  b  ")," ","")]');
+  }
+
+  function test70() {
+    wgxpath.test.assertEvaluatesToNodeSet(['q'],
+        './/*[normalize-space()="q"]');
+  }
+
+  function test71() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div'],
+        './/*[boolean(@title - 1) = false()]');
+  }
+
+  function test72() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div'],
+        './/*[not(@title - 1) = true()]');
+  }
+
+  function test73() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'center', 'blockquote',
+        'span'], './/*[number(@title) < number(@class)]');
+  }
+
+  function test74() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'center', 'h1', 'h2',
+        'blockquote', 'p', 'h3', 'h4', 'span'],
+        './/*[sum(ancestor::*/@title) < sum(descendant::*/@title)]');
+  }
+
+  function test75() {
+    wgxpath.test.assertEvaluatesToNodeSet(['h1', 'em', 'strong', 'h2', 'b', 's',
+        'br', 'p', 'del', 'ins', 'font', 'h3', 'dfn', 'a', 'h4', 'sub', 'sup',
+        'acronym', 'q'], './/*[floor(@title div @class) = 1]');
+  }
+
+  function test76() {
+    wgxpath.test.assertEvaluatesToNodeSet(['div', 'dl', 'center', 'h1', 'h2',
+        'blockquote', 'h3', 'h4', 'span'],
+        './/*[ceiling(@title div @class) = 1]');
+  }
+
+  function test77() {
+    wgxpath.test.assertEvaluatesToNodeSet(['dl', 'h1', 'h2', 'b', 's',
+        'blockquote', 'br', 'p', 'del', 'ins', 'font', 'h3', 'dfn', 'a', 'h4',
+        'sub', 'sup', 'span', 'acronym', 'q'],
+        './/*[round(@title div @class) = 1]');
+  }
+
+  function test78() {
+    wgxpath.test.assertEvaluatesToNodeSet([], '/..');
+  }
+
+  function test79() {
+    var expected;
+    if (wgxpath.test.IE_DOC_PRE_10) {
+      expected = ['comment(blockquoteComment)', 'comment( hoge)'];
+    } else if (GECKO_PRE_2 || wgxpath.test.ANDROID_FROYO || OPERA_PRE_12) {
+      expected = ['comment(blockquoteComment)'];
+    } else {
+      expected = ['comment(blockquoteComment)', 'comment(?pi hoge ?)'];
+    }
+    wgxpath.test.assertEvaluatesToNodeSet(expected, './/blockquote/comment()');
+  }
+
+  // Added for getDescendant()
+  function test80() {
+    var expected;
+    if (wgxpath.test.IE_DOC_PRE_10) {
+      expected = ['comment(blockquoteComment)', 'comment( hoge)'];
+    } else if (GECKO_PRE_2 || wgxpath.test.ANDROID_FROYO || OPERA_PRE_12) {
+      expected = ['comment(blockquoteComment)'];
+    } else {
+      expected = ['comment(blockquoteComment)', 'comment(?pi hoge ?)'];
+    }
+    wgxpath.test.assertEvaluatesToNodeSet(expected, '//comment()');
+  }
+
+  // Added for getChildNodes()
+  function test81() {
+    wgxpath.test.assertEvaluatesToNodeSet([], 'comment()');
+  }
+
+  function test82() {
+    var expected = OPERA_PRE_12 ? ['processing-instruction(pi=hoge )'] : [];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        '//blockquote/processing-instruction()');
+  }
+
+  function test83() {
+    var expected = OPERA_PRE_12 ? ['processing-instruction(pi=hoge )'] : [];
+    wgxpath.test.assertEvaluatesToNodeSet(expected,
+        '//blockquote/processing-instruction("pi")');
+  }
+
+  function test84() {
+    var expected;
+    if (wgxpath.test.IE_DOC_PRE_9) {
+      expected =
+        ['comment(blockquoteComment)', 'text(blockquoteText1: )', 'br',
+         'text(blockquoteText2 )', 'p', 'comment( hoge)', 'font', 'text( )'];
+    } else if (wgxpath.test.IE_DOC_PRE_10) {
+      expected =
+        ['text(\n     )', 'comment(blockquoteComment)',
+         'text(\n     blockquoteText1:\n     )', 'br',
+         'text(\n     blockquoteText2\n     )', 'p', 'text(\n     )',
+         'comment( hoge)', 'text(\n     )', 'font', 'text(\n    )'];
+    } else if (GECKO_PRE_2) {
+      expected =
+        ['text(\n     )', 'comment(blockquoteComment)',
+         'text(\n     blockquoteText1:\n     )', 'br',
+         'text(\n     blockquoteText2\n     )', 'p',
+         'text(\n     \n     )', 'font', 'text(\n    )'];
+    } else if (wgxpath.test.ANDROID_FROYO) {
+      expected =
+        ['text(\n     )', 'comment(blockquoteComment)',
+         'text(\n     blockquoteText1:\n     )', 'br',
+         'text(\n     blockquoteText2\n     )', 'p',
+         'text(\n          )', 'font', 'text(\n    )'];
+    } else if (OPERA_PRE_12) {
+      expected =
+        ['text(\n     )', 'comment(blockquoteComment)',
+         'text(\n     blockquoteText1:\n     )', 'br',
+         'text(\n     blockquoteText2\n     )', 'p', 'text(\n     )',
+         'processing-instruction(pi=hoge )', 'text(\n     )', 'font',
+         'text(\n    )'];
+    } else {
+      expected =
+        ['text(\n     )', 'comment(blockquoteComment)',
+         'text(\n     blockquoteText1:\n     )', 'br',
+         'text(\n     blockquoteText2\n     )', 'p', 'text(\n     )',
+         'comment(?pi hoge ?)', 'text(\n     )', 'font', 'text(\n    )'];
+    }
+    wgxpath.test.assertEvaluatesToNodeSet(expected, './/blockquote/node()');
+  }
+</script>
+</html>

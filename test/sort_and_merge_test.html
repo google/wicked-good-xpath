@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Sort and Merge Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="sort_and_merge_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1'], 'id("container")/*[1]');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-2'], 'id("container")/*[2]');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-3'], 'id("container")/*[3]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-4'], 'id("container")/*[4]');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+        'li#li-4'],
+        'id("container")/*[3] | id("container")/*[4] | id("container")/*[2]' +
+        '|id("container")/*[1]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-2', 'li#li-3', 'li#li-4'],
+        'id("container")/*[4] | id("container")/*[2] | id("container")/*[4]' +
+        '|id("container")/*[3]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+        'li#li-4'],
+        'id("li-1 li-2 li-3 li-4")');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+        'li#li-4'],
+        'id("li-4 li-3 li-2 li-1")');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2'],
+        'id("li-2 li-2 li-1 li-1")');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+        'li#li-4', 'li#li-5', 'li#li-6', 'li#li-7', 'li#li-8'],
+        'id("container")/* | id("container-0")/*');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+        'li#li-4', 'li#li-5', 'li#li-6', 'li#li-7', 'li#li-8'],
+        'id("container-0")/* | id("container")/*');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li#li-1', 'li#li-2', 'li#li-3',
+    'li#li-4', 'li#li-5', 'li#li-6', 'li#li-7', 'li#li-8'],
+    'id("container-0")/* | id("container")/* | id("container-0")/*');
+  }
+</script>
+</html>

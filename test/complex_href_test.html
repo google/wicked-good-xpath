@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Complex href</title>
+  <iframe id="testFrame" src="complex_href_test_page.html"></iframe>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="complex_href_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id0-0'],
+        '//a[@href="javascript:doFoo(a, b)"]');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id0-1'],
+        '//a[@href="javascript:doFoo(a, %20b)"]');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id0-2'],
+        '//a[@href="javascript:doFoo(%61, %20b)"]');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id1-0'],
+        '//a[@href="http://example.com/a b"]');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id1-1'],
+        '//a[@href="http://example.com/a%20b"]');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id1-2'],
+        '//a[@href="http://example.com/%61%20b"]');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['a#id1-0'],
+        '//*[@href="http://example.com/a b"][@href="http://example.com/a b"]');
+  }
+</script>
+</html>

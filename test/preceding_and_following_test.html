@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--
+Copyright 2012 Google Inc. All Rights Reserved.
+Author: moz@google.com (Michael Zhou)
+-->
+<html>
+<head>
+  <title>Preceding and Following Test</title>
+  <script src="../../../../../javascript/closure/base.js"></script>
+  <script src="../wgxpath.install.js"></script>
+</head>
+<body>
+  <iframe id="testFrame" src="preceding_and_following_test_page.html"></iframe>
+</body>
+<script src="./test_js_deps.js"></script>
+<script>
+  goog.require('goog.testing.jsunit');
+  goog.require('wgxpath.test');
+</script>
+<script>
+  function setUpPage() {
+    var testFrame = document.getElementById('testFrame');
+    wgxpath.test.setContext(testFrame.contentWindow.document);
+  }
+
+  function test00() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'li#t2', 'p.2', 'div', 'p.3',
+        'ul', 'li#t3', 'li', 'li#t4', 'p.4'], 'id("t1")/following::*');
+  }
+
+  function test01() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.2', 'div', 'p.3', 'ul', 'li#t3',
+        'li', 'li#t4', 'p.4'], 'id("t2")/following::*');
+  }
+
+  function test02() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'li#t4', 'p.4'],
+        'id("t3")/following::*');
+  }
+
+  function test03() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.4'], 'id("t4")/following::*');
+  }
+
+  function test04() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'li#t4', 'p.4'],
+        'id("t3 t4")/following::*');
+  }
+
+  function test05() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.2', 'div', 'p.3', 'ul', 'li#t3',
+        'li', 'li#t4', 'p.4'], 'id("t2 t3 t4")/following::*');
+  }
+
+  function test06() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'li#t2', 'p.2', 'div', 'p.3',
+        'ul', 'li#t3', 'li', 'li#t4', 'p.4'], 'id("t1 t2 t3 t4")/following::*');
+  }
+
+  function test07() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'div', 'p.1', 'ul',
+        'li#t1', 'li', 'li#t2', 'p.2', 'p.3', 'li#t3', 'li'],
+        'id("t1 t2 t3 t4")/preceding::*');
+  }
+
+  function test08() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'div', 'p.1', 'ul',
+        'li#t1', 'li', 'li#t2', 'p.2', 'p.3'], 'id("t1 t2 t3")/preceding::*');
+  }
+
+  function test09() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'p.1', 'li#t1',
+        'li'], 'id("t1 t2")/preceding::*');
+  }
+
+  function test10() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'p.1'],
+        'id("t1")/preceding::*');
+  }
+
+  function test11() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'p.1', 'li#t1',
+        'li'], 'id("t2")/preceding::*');
+  }
+
+  function test12() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'div', 'p.1', 'ul',
+        'li#t1', 'li', 'li#t2', 'p.2', 'p.3'], 'id("t3")/preceding::*');
+  }
+
+  function test13() {
+    wgxpath.test.assertEvaluatesToNodeSet(['head', 'title', 'div', 'p.1', 'ul',
+        'li#t1', 'li', 'li#t2', 'p.2', 'p.3', 'li#t3', 'li'],
+        'id("t4")/preceding::*');
+  }
+
+  function test14() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li'], 'id("t1")/following::*[1]');
+  }
+
+  function test15() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.2'], 'id("t2")/following::*[1]');
+  }
+
+  function test16() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li'], 'id("t3")/following::*[1]');
+  }
+
+  function test17() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.4'], 'id("t4")/following::*[1]');
+  }
+
+  function test18() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'p.4'],
+        'id("t3 t4")/following::*[1]');
+  }
+
+  function test19() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.2', 'li', 'p.4'],
+        'id("t2 t3 t4")/following::*[1]');
+  }
+
+  function test20() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li', 'p.2', 'li', 'p.4'],
+        'id("t1 t2 t3 t4")/following::*[1]');
+  }
+
+  function test21() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.1', 'li', 'p.3', 'li'],
+        'id("t1 t2 t3 t4")/preceding::*[1]');
+  }
+
+  function test22() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.1', 'li', 'p.3'],
+        'id("t1 t2 t3")/preceding::*[1]');
+  }
+
+  function test23() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.1', 'li'],
+        'id("t1 t2")/preceding::*[1]');
+  }
+
+  function test24() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.1'], 'id("t1")/preceding::*[1]');
+  }
+
+  function test25() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li'], 'id("t2")/preceding::*[1]');
+  }
+
+  function test26() {
+    wgxpath.test.assertEvaluatesToNodeSet(['p.3'], 'id("t3")/preceding::*[1]');
+  }
+
+  function test27() {
+    wgxpath.test.assertEvaluatesToNodeSet(['li'], 'id("t4")/preceding::*[1]');
+  }
+</script>
+</html>
