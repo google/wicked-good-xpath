@@ -37,6 +37,7 @@ goog.require('wgxpath.Expr');
 goog.require('wgxpath.Number');
 
 
+// TODO(moz): Add tests involving wgxpath.NodeSet.
 function assertBinaryExprEvaluatesTo(expected, op, left, right) {
   var expr = new wgxpath.BinaryExpr(op, new wgxpath.Number(left),
                                     new wgxpath.Number(right));
