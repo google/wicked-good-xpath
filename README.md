@@ -1,5 +1,7 @@
 # Wicked Good XPath
 
+[![Build Status](https://travis-ci.org/Dominator008/wicked-good-xpath.svg?branch=master)](https://travis-ci.org/Dominator008/wicked-good-xpath)
+
 ## About
 Wicked Good XPath is a Google-authored pure JavaScript implementation of the <a href="http://www.w3.org/TR/DOM-Level-3-XPath/">DOM Level 3 XPath specification</a>. It enables XPath evaluation for HTML documents in every browser. We believe it to be the fastest XPath implementation available in JavaScript.
 
