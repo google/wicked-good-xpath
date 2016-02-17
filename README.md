@@ -10,6 +10,8 @@ Download the latest <a href="https://github.com/google/wicked-good-xpath/release
 ```
 Then call `wgxpath.install()` from your JavaScript code, which will ensure <a href="http://www.w3.org/TR/DOM-Level-3-XPath/xpath.html#XPathEvaluator-evaluate">`document.evaluate`</a>, the XPath evaluation function, is defined on the window object. To install the library on a different window, pass that window as an argument to the install function.
 
+There's also an NPM package at https://www.npmjs.com/package/wgxpath.
+
 ## Building it Yourself
 We use Gulp:
 ```
