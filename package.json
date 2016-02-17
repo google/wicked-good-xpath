@@ -46,6 +46,7 @@
   "homepage": "https://github.com/google/wicked-good-xpath",
   "devDependencies": {
     "google-closure-compiler": "20160208.1.0",
-    "google-closure-library": "20160208.0.0"
+    "google-closure-library": "20160208.0.0",
+    "gulp": "^3.9.0"
   }
 }
