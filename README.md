@@ -10,6 +10,15 @@ Download the latest <a href="https://github.com/google/wicked-good-xpath/release
 ```
 Then call `wgxpath.install()` from your JavaScript code, which will ensure <a href="http://www.w3.org/TR/DOM-Level-3-XPath/xpath.html#XPathEvaluator-evaluate">`document.evaluate`</a>, the XPath evaluation function, is defined on the window object. To install the library on a different window, pass that window as an argument to the install function.
 
+## Building it Yourself
+We use Gulp:
+```
+npm install
+gulp
+```
+You can also run `src/compile.sh` if you want to use different versions of
+Closure Compiler / Closure Library.
+
 ## History
 Wicked Good XPath started as a <a href="https://developers.google.com/closure/">Google Closure</a> port of the <a href="http://coderepos.org/share/wiki/JavaScript-XPath">JavaScript-XPath</a> project by Cybozu Labs. At the time, JavaScript-XPath was the fastest JavaScript implementation of XPath available --- a whopping 10 times faster than Google's own AJAXSLT --- which made it a popular choice, notable for frontend web testing tools like <a href="http://docs.seleniumhq.org/">Selenium</a> and <a href="https://github.com/google/puppeteer">Web Puppeteer</a>.
 

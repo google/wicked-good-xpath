@@ -1,0 +1,51 @@
+{
+  "name": "wicked-good-xpath",
+  "description": "Pure JS implementation of the DOM Level 3 XPath specification",
+  "version": "1.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/google/wicked-good-xpath"
+  },
+  "main": "wgxpath.install.js",
+  "keywords": [
+    "closure",
+    "google",
+    "html",
+    "javascript",
+    "library",
+    "parse",
+    "wgxpath",
+    "wicked-good-xpath",
+    "xpath"
+  ],
+  "author": {
+    "name": "Google Inc."
+  },
+  "contributors": [
+    {
+      "name": "Evan Thomas",
+      "email": "evanrthom@gmail.com"
+    },
+    {
+      "name": "Greg Dennis",
+      "email": "gdennis@google.com"
+    },
+    {
+      "name": "Joon Lee",
+      "email": "joonlee@google.com"
+    },
+    {
+      "name": "Michael Zhou",
+      "email": "zhoumotongxue008@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/google/wicked-good-xpath/issues"
+  },
+  "homepage": "https://github.com/google/wicked-good-xpath",
+  "devDependencies": {
+    "google-closure-compiler": "20160208.1.0",
+    "google-closure-library": "20160208.0.0"
+  }
+}
