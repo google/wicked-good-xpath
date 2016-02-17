@@ -1,12 +1,27 @@
 #!/bin/sh
-python ../closure-library/closure/bin/build/closurebuilder.py \
-    --root ../closure-library \
-    --root . \
-    --namespace wgxpath \
-    --output_mode compiled \
-    --compiler_jar ../closure-compiler/build/compiler.jar \
-    --compiler_flags "--compilation_level=ADVANCED_OPTIMIZATIONS" \
-    --compiler_flags "--output_wrapper=(function(){%output%})()" \
-    --compiler_flags "--use_types_for_optimization" \
-    --compiler_flags "--warning_level=VERBOSE" \
-    > wgxpath.install.js
+#
+# Script to compile Wicked Good XPath. This script assumes that you have
+# Closure Compiler at ../../closure-compiler/build/compiler.jar and Closure
+# Library at ../../closure-library. This script is now deprecated in favor
+# of Gulp unless you are using Closure Compiler or Closure Library from HEAD.
+
+echo "Compiling Wicked Good XPath with Closure Compiler..."
+java -jar ../closure-compiler/build/compiler.jar \
+    -O ADVANCED \
+    --dependency_mode STRICT \
+    --entry_point goog:wgxpath \
+    --language_in ES6_STRICT \
+    --language_out ES5_STRICT \
+    --js 'src/*.js' \
+    --js '!src/*_test.js' \
+    --js '../closure-library/closure/**/*.js' \
+    --js '!../closure-library/closure/**/*_test.js' \
+    --js_output_file wgxpath.install.js \
+    --output_wrapper '(function(){%output%}).call(this)' \
+    --warning_level VERBOSE
+if [ $? -eq 0 ]
+then
+  echo "Compilation succeeded."
+else
+  echo "Compilation failed."
+fi
