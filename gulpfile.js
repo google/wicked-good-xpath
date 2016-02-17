@@ -38,7 +38,7 @@ gulp.task('compile', function() {
           'src/*.js',
           '!src/*_test.js',
           'node_modules/google-closure-library/closure/**/*.js',
-          'node_modules/google-closure-library/closure/**/*_test.js'
+          '!node_modules/google-closure-library/closure/**/*_test.js'
       ])
       .pipe(closureCompiler({
         compilation_level: 'ADVANCED',
@@ -52,4 +52,27 @@ gulp.task('compile', function() {
       }))
       .pipe(gulp.dest('./dist'));
 });
+
+gulp.task('compile-node', function() {
+  return gulp.src([
+          'src/*.js',
+          '!src/*_test.js',
+          '!src/nodeModuleExterns.js',
+          'node_modules/google-closure-library/closure/**/*.js',
+          '!node_modules/google-closure-library/closure/**/*_test.js',
+      ])
+      .pipe(closureCompiler({
+        compilation_level: 'ADVANCED',
+        dependency_mode: 'STRICT',
+        entry_point: 'goog:wgxpath.nodeModuleExport',
+        externs: 'src/nodeModuleExterns.js',
+        language_in: 'ES6_STRICT',
+        language_out: 'ES5_STRICT',
+        js_output_file: 'wgxpath.install-node.js',
+        output_wrapper: '(function(){%output%}).call(global)',
+        warning_level: 'VERBOSE'
+      }))
+      .pipe(gulp.dest('./dist'));
+});
+
 gulp.task('default', ['compile']);
