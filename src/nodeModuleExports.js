@@ -29,7 +29,7 @@
  * @author zhoumotongxue008@gmail.com (Michael Zhou)
  */
 
-goog.provide('wgxpath.nodeModuleExport');
+goog.provide('wgxpath.nodeModuleExports');
 
 goog.require('wgxpath');
 

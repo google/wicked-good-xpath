@@ -64,7 +64,7 @@ gulp.task('compile-node', function() {
       .pipe(closureCompiler({
         compilation_level: 'ADVANCED',
         dependency_mode: 'STRICT',
-        entry_point: 'goog:wgxpath.nodeModuleExport',
+        entry_point: 'goog:wgxpath.nodeModuleExports',
         externs: 'src/nodeModuleExterns.js',
         language_in: 'ES6_STRICT',
         language_out: 'ES5_STRICT',
