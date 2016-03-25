@@ -8,6 +8,7 @@
 echo "Compiling Wicked Good XPath with Closure Compiler..."
 java -jar ../closure-compiler/build/compiler.jar \
     -O ADVANCED \
+    --assume_function_wrapper \
     --dependency_mode STRICT \
     --entry_point goog:wgxpath \
     --language_in ES6_STRICT \
