@@ -41,6 +41,7 @@ gulp.task('compile', function() {
           '!node_modules/google-closure-library/closure/**/*_test.js'
       ])
       .pipe(closureCompiler({
+        assume_function_wrapper: true,
         compilation_level: 'ADVANCED',
         dependency_mode: 'STRICT',
         entry_point: 'goog:wgxpath',
@@ -62,6 +63,7 @@ gulp.task('compile-node', function() {
           '!node_modules/google-closure-library/closure/**/*_test.js',
       ])
       .pipe(closureCompiler({
+        assume_function_wrapper: true,
         compilation_level: 'ADVANCED',
         dependency_mode: 'STRICT',
         entry_point: 'goog:wgxpath.nodeModuleExports',
