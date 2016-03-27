@@ -19,6 +19,7 @@ java -jar ../closure-compiler/build/compiler.jar \
     --js '!../closure-library/closure/**/*_test.js' \
     --js_output_file wgxpath.install.js \
     --output_wrapper '(function(){%output%}).call(this)' \
+    --use_types_for_optimization \
     --warning_level VERBOSE
 if [ $? -eq 0 ]
 then

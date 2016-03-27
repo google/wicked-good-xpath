@@ -49,6 +49,7 @@ gulp.task('compile', function() {
         language_out: 'ES5_STRICT',
         js_output_file: 'wgxpath.install.js',
         output_wrapper: '(function(){%output%}).call(this)',
+        use_types_for_optimization: true,
         warning_level: 'VERBOSE'
       }))
       .pipe(gulp.dest('./dist'));
