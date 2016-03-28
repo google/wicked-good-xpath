@@ -73,6 +73,7 @@ gulp.task('compile-node', function() {
         language_out: 'ES5_STRICT',
         js_output_file: 'wgxpath.install-node.js',
         output_wrapper: '(function(){%output%}).call(global)',
+        use_types_for_optimization: true,
         warning_level: 'VERBOSE'
       }))
       .pipe(gulp.dest('./dist'));
