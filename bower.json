@@ -1,0 +1,45 @@
+{
+  "name": "wicked-good-xpath",
+  "description": "Pure JS implementation of the DOM Level 3 XPath specification",
+  "main": "dist/wgxpath.install.js",
+  "authors": [
+    {
+      "name": "Evan Thomas",
+      "email": "evanrthom@gmail.com"
+    },
+    {
+      "name": "Greg Dennis",
+      "email": "gdennis@google.com"
+    },
+    {
+      "name": "Joon Lee",
+      "email": "joonlee@google.com"
+    },
+    {
+      "name": "Michael Zhou",
+      "email": "zhoumotongxue008@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "closure",
+    "google",
+    "html",
+    "javascript",
+    "library",
+    "parse",
+    "wgxpath",
+    "wicked-good-xpath",
+    "xpath"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
