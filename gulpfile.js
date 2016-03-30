@@ -79,4 +79,4 @@ gulp.task('compile-node', function() {
       .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('default', ['compile']);
+gulp.task('default', ['compile', 'compile-node']);
