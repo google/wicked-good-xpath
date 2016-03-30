@@ -1,7 +1,7 @@
 {
   "name": "wicked-good-xpath",
   "description": "Pure JS implementation of the DOM Level 3 XPath specification",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/google/wicked-good-xpath.git"
@@ -50,8 +50,8 @@
   },
   "homepage": "https://github.com/google/wicked-good-xpath",
   "devDependencies": {
-    "google-closure-compiler": "20160315.0.0",
-    "google-closure-library": "20160315.0.0",
+    "google-closure-compiler": "^20160315.1.0",
+    "google-closure-library": "^20160315.0.0",
     "gulp": "^3.9.0"
   }
 }
