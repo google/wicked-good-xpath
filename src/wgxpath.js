@@ -229,7 +229,7 @@ wgxpath.XPathNSResolver_ = function(node) {
  */
 wgxpath.install = function(opt_win, opt_force) {
   var win = opt_win || goog.global;
-  var doc = win.document;
+  var doc = (win.Document && win.Document.prototype) || win.document;
 
   // Unless opt_force is true, installation is a noop if native XPath is
   // available.
