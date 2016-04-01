@@ -1,7 +1,7 @@
 {
   "name": "wicked-good-xpath",
   "description": "Pure JS implementation of the DOM Level 3 XPath specification",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "repository": {
     "type": "git",
     "url": "https://github.com/google/wicked-good-xpath.git"
