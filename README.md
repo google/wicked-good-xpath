@@ -15,6 +15,15 @@ Then call `wgxpath.install()` from your JavaScript code, which will ensure <a hr
 We provide an NPM package at https://www.npmjs.com/package/wicked-good-xpath.
 There's also another NPM package at https://www.npmjs.com/package/wgxpath.
 
+To install via NPM or Bower, do
+```
+npm install wicked-good-xpath
+```
+or
+```
+bower install wicked-good-xpath
+```
+
 ## Building it Yourself
 We use Gulp:
 ```
